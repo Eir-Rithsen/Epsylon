@@ -35,6 +35,27 @@ nav ul li a {
   font-weight: bold;
 }
 
+/* Cards Compartidas */
+.card {
+  background-color: white;
+  border: 1px solid #ddd;
+  padding: 20px;
+  text-align: center;
+  width: 200px;
+  border-radius: 8px;
+  transition: transform 0.2s;
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
 /* Wishlist */
 #wishlist {
   padding: 2rem;
@@ -63,25 +84,16 @@ nav ul li a {
   justify-content: center;
 }
 
-/* Cards compartidas */
-.card {
-  background-color: white;
-  border: 1px solid #ddd;
-  padding: 20px;
-  text-align: center;
-  width: 200px;
-  border-radius: 8px;
-  transition: transform 0.2s;
-}
+/* Media Queries */
+@media (max-width: 768px) {
+  .productos-container,
+  .wishlist-container,
+  .pagos-container {
+    flex-direction: column;
+    align-items: center;
+  }
 
-.card img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
+  .card {
+    width: 90%;
+  }
 }
-
-.card:hover {
-  transform: scale(1.05);
-}
-
-/* Otros estilos permanecen igual */
