@@ -29,27 +29,42 @@ async function cargarProductos() {
   }
 }
 
-// Función para añadir productos al carrito
-function agregarAlCarrito(event) {
-  const button = event.target;
-  const idProducto = button.dataset.id;
-  const nombreProducto = button.dataset.name;
-  const precioProducto = parseFloat(button.dataset.price);
+// Función para mostrar el carrito
+function mostrarCarrito() {
+  const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+  const carritoItems = document.getElementById('carrito-items');
+  const totalElement = document.getElementById('total');
+  carritoItems.innerHTML = '';
 
+  let total = 0;
+
+  carrito.forEach(producto => {
+    total += producto.precio * producto.cantidad;
+
+    const item = document.createElement('div');
+    item.classList.add('carrito-item');
+    item.innerHTML = `
+      <span>${producto.nombre} (x${producto.cantidad}) - $${(producto.precio * producto.cantidad).toFixed(2)}</span>
+      <button class="remove-item" data-id="${producto.id}">Eliminar</button>
+    `;
+    carritoItems.appendChild(item);
+  });
+
+  totalElement.innerHTML = `<strong>Total: </strong>$${total.toFixed(2)}`;
+
+  document.querySelectorAll('.remove-item').forEach(button => button.addEventListener('click', eliminarProducto));
+}
+
+// Función para eliminar un producto del carrito
+function eliminarProducto(event) {
+  const idProducto = event.target.dataset.id;
   let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-  const productoExistente = carrito.find(p => p.id === idProducto);
-
-  if (productoExistente) {
-    productoExistente.cantidad++;
-  } else {
-    carrito.push({ id: idProducto, nombre: nombreProducto, precio: precioProducto, cantidad: 1 });
-  }
-
+  carrito = carrito.filter(producto => producto.id !== idProducto);
   localStorage.setItem('carrito', JSON.stringify(carrito));
   mostrarCarrito();
 }
 
-// Función para añadir productos al wishlist
+// Función para añadir productos a la wishlist
 function agregarAWishlist(event) {
   const button = event.target;
   const idProducto = button.dataset.id;
@@ -64,7 +79,7 @@ function agregarAWishlist(event) {
   mostrarWishlist();
 }
 
-// Mostrar wishlist
+// Función para mostrar la wishlist
 function mostrarWishlist() {
   const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
   const contenedorWishlist = document.getElementById('wishlist-items');
@@ -85,7 +100,7 @@ function mostrarWishlist() {
     .forEach(button => button.addEventListener('click', eliminarDeWishlist));
 }
 
-// Eliminar productos de la wishlist
+// Función para eliminar productos de la wishlist
 function eliminarDeWishlist(event) {
   const idProducto = event.target.dataset.id;
   let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
