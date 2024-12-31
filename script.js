@@ -49,6 +49,51 @@ function agregarAlCarrito(event) {
   mostrarCarrito();
 }
 
+// Función para añadir productos al wishlist
+function agregarAWishlist(event) {
+  const button = event.target;
+  const idProducto = button.dataset.id;
+  const nombreProducto = button.dataset.name;
+
+  let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+  if (!wishlist.find(p => p.id === idProducto)) {
+    wishlist.push({ id: idProducto, nombre: nombreProducto });
+  }
+
+  localStorage.setItem('wishlist', JSON.stringify(wishlist));
+  mostrarWishlist();
+}
+
+// Mostrar wishlist
+function mostrarWishlist() {
+  const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+  const contenedorWishlist = document.getElementById('wishlist-items');
+  contenedorWishlist.innerHTML = '';
+
+  wishlist.forEach(producto => {
+    const item = document.createElement('div');
+    item.classList.add('wishlist-item');
+    item.innerHTML = `
+      <h3>${producto.nombre}</h3>
+      <button class="remove-wishlist-item" data-id="${producto.id}">Eliminar</button>
+    `;
+    contenedorWishlist.appendChild(item);
+  });
+
+  document
+    .querySelectorAll('.remove-wishlist-item')
+    .forEach(button => button.addEventListener('click', eliminarDeWishlist));
+}
+
+// Eliminar productos de la wishlist
+function eliminarDeWishlist(event) {
+  const idProducto = event.target.dataset.id;
+  let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+  wishlist = wishlist.filter(producto => producto.id !== idProducto);
+  localStorage.setItem('wishlist', JSON.stringify(wishlist));
+  mostrarWishlist();
+}
+
 // Inicializar página
 function inicializarPagina() {
   cargarProductos();
