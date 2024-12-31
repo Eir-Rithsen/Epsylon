@@ -4,10 +4,9 @@ const API_MERCADOPAGO = 'https://api.mercadopago.com/v1/payment_methods'; // API
 // Función para cargar productos desde la API
 async function cargarProductos() {
   try {
-    const respuesta = await fetch(API_PRODUCTS);
-    const productos = await respuesta.json();
+      const respuesta = await fetch('https://fakestoreapi.com/products'); // API pública para productos
+      const productos = await respuesta.json();
     const listaProductos = document.getElementById('producto-lista');
-
     productos.forEach(producto => {
       const card = document.createElement('div');
       card.classList.add('product-card', 'card');
