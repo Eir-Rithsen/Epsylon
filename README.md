@@ -29,13 +29,7 @@ Antes de comenzar, asegúrate de tener lo siguiente:
 
 ## Configuración y Uso
 
-### 1. Clonar el repositorio
-
-```bash
-git clone https://github.com/Eir-Rithsen/ecommerce-project.git
-cd ecommerce-project
-```
-### 2. Abrir el proyecto
+### 1. Clonar y abrir el proyecto
 
 Abre el archivo `index.html` en tu navegador.
 
